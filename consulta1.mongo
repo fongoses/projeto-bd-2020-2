@@ -1,0 +1,7 @@
+db = db.getSiblingDB("registros-ufrgs");
+
+db.getCollection("ufrgs-records").find(
+    {
+        "id" : NumberLong($id)
+    }
+);
