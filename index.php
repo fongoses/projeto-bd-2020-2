@@ -9,6 +9,7 @@
     <br>
     <ul>
         <li><a href="consulta1.php">Consulta por ID do Registro</a></li>
+        <li><a href="consulta2.php">Consulta por Nome Completo</a></li>
     </ul>
 </body>
 </hmtl>
