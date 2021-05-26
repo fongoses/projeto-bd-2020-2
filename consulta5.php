@@ -14,25 +14,28 @@ error_reporting(E_ALL);
     <div>
         <form method="get" action="consulta5.php">
             <p>
-              <label for="txtId">ID do Registro: </label><br>
-              <input id="txtId" name="txtId" type="text" value="">
-              <input type="checkbox" name="checkID" value="on"> Incluir na Consulta <br><br>
-              <select name="Operacao">
-                    <option value=""></option>
-                    <option value="andOP">AND</option>
-                    <option value="orOP">OR</option>
-                </select>
-                Operação <br><br>
+                <label for="txtId">ID do Registro: </label><br>
+                <input id="txtId" name="txtId" type="text" value=""><br>
+                <input type="checkbox" name="checkId" value="on"> Incluir na Consulta <br>
 
-              <label for="txtNome">Nome do Servidor: </label><br>
-              <input id="txtNome" name="txtNome" type="text" value="">
-              <input type="checkbox" name="checkNomeServidor" value="on"> Incluir na Consulta <br><br>
-              <select name="Operacao2">
-                    <option value=""></option>
-                    <option value="andOP">AND</option>
-                    <option value="orOP">OR</option>
+                <label for="txtNome">Nome do Servidor: </label><br>
+                <input id="txtNome" name="txtNome" type="text" value=""><br>
+                <input type="checkbox" name="checkNome" value="on"> Incluir na Consulta <br>
+
+                <label for="txtSiape">Siape: </label><br>
+                <input id="txtSiape" name="txtSiape" type="text" value=""><br>
+                <input type="checkbox" name="checkSiape" value="on"> Incluir na Consulta <br>
+
+                <label for="txtArquivo">Nome do Arquivo: </label><br>
+                <input id="txtArquivo" name="txtArquivo" type="text" value=""><br>
+                <input type="checkbox" name="checkArquivo" value="on"> Incluir na Consulta <br>
+
+                <br>
+                Operação: <br>
+                <select name="selectOperacao">
+                    <option value="$and" selected>AND</option>
+                    <option value="$or">OR</option>
                 </select>
-                Operação <br><br>
 
             </p>
             <input type="submit" value="Consultar">
@@ -44,18 +47,39 @@ error_reporting(E_ALL);
         <?php
         require_once __DIR__ . "/vendor/autoload.php";
 
-        if(isset($_POST['checkID'])){
-          $id = intval($_GET["txtId"]);
-        } else {
-          $id = "";
+        if(!isset($_GET['checkId'])
+        && !isset($_GET['checkNome'])
+        && !isset($_GET['checkSiape'])
+        && !isset($_GET['checkArquivo'])) {
+            exit;
         }
 
-        if(isset($_POST['checkNomeServidor'])){
-          $nome = $_GET["txtNome"];
-        } else {
-          $nome = "";
+        $fields = [];
+
+        if(isset($_GET['checkId'])){
+          $id = intval($_GET["txtId"]);
+          $fields[] = [ 'id' => $id ];
         }
-        //
+
+        if(isset($_GET['checkNome'])){
+          $nome = $_GET["txtNome"];
+          $fields[] = [ 'name' => $nome ];
+        }
+
+        if(isset($_GET['checkSiape'])){
+          $siape = $_GET["txtSiape"];
+          $fields[] = [ 'siape' => $siape ];
+        }
+
+        if(isset($_GET['checkArquivo'])){
+          $arquivo = $_GET["txtArquivo"];
+          $fields[] = [ 'document.name' => $arquivo ];
+        }
+
+        $operacao = $_GET["selectOperacao"];
+
+        //print_r($fields); exit;
+
         // if(!isset($_GET["txtNomePortaria"]) || ($_GET["txtNomePortaria"]=="")) exit;
         // $nomePortaria = $_GET["txtNomePortaria"];
 
@@ -67,9 +91,10 @@ error_reporting(E_ALL);
 
 
         $query = [
-          'id' => $id,
-          'name' => $nome
+            $operacao => $fields
         ];
+
+        //print_r($query); exit;
 
         $options = [];
 
@@ -78,6 +103,10 @@ error_reporting(E_ALL);
         <div>
             <div><span>ID do Registro:</span> <?=$id ?></div>
             <div><span>Nome:</span> <?=$nome ?></div>
+            <div><span>SIAPE:</span> <?=$siape ?></div>
+            <div><span>Nome do Arquivo:</span> <?=$arquivo ?></div>
+            <br>
+            <div><span>Operação:</span> <?=$operacao ?></div>
         </div>
         <br>
 
