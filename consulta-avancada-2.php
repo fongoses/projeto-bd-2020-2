@@ -5,16 +5,16 @@ error_reporting(E_ALL);
 <html lang="pt-br">
 <head>
 <meta charset="utf-8">
-<title>Consulta por ID do Registro</title>
+<title>Lista de Nomes de Arquivos de Portarias de um Nome de Servidor</title>
 </head>
 <body>
-    <div><h1>Consulta por ID do Registro</h1></div>
+    <div><h1>Lista de Nomes de Arquivos de Portarias de um Nome de Servidor</h1></div>
     <br>
 
     <div>
-        <form method="get" action="consulta1.php">
-            <label for="txtId">ID do Registro: </label><br>
-            <input id="txtId" name="txtId" type="text" value=""><br>
+        <form method="get" action="consulta-avancada-2.php">
+            <label for="txtNome">Nome: </label><br>
+            <input id="txtNome" name="txtNome" type="text" value=""><br>
             <input type="submit" value="Consultar">
         </form>
     </div>
@@ -24,8 +24,8 @@ error_reporting(E_ALL);
         <?php
         require_once __DIR__ . "/vendor/autoload.php";
 
-        if(!isset($_GET["txtId"]) || ($_GET["txtId"]=="")) exit;
-        $id = intval($_GET["txtId"]);
+        if(!isset($_GET["txtNome"]) || ($_GET["txtNome"]=="")) exit;
+        $nome = $_GET["txtNome"];
 
         $client = new MongoDB\Client("mongodb://localhost:27017");
 
@@ -34,24 +34,30 @@ error_reporting(E_ALL);
         $collection = $db->selectCollection("ufrgs-records");
 
         $query = [
-            'id' => $id
+            '$or' => [
+                [
+                    'name' => $nome
+                ]
+            ]
         ];
 
-        $options = [];
+        $options = [
+            'projection' => [
+                'document.name' => 1.0
+            ]
+        ];
+
 
        ?>
         <div><h1>Parâmetros da Consulta</h1></div>
         <div>
-            <div><span>ID do Registro:</span> <?=$id ?></div>
+            <div><span>Nome:</span> <?=$nome ?></div>
         </div>
         <br>
 
         <div>
             <table>
                 <tr>
-                    <th>ID</th>
-                    <th>Nome Assinatura</th>
-                    <th>Matrículas SIAPE do Documento</th>
                     <th>Nome do Arquivo</th>
                 </tr>
                 <?php
@@ -62,11 +68,7 @@ error_reporting(E_ALL);
                     foreach($p["siape"] as $s) {
                         $siape[] = $s;
                     }
-
                     echo "<tr>";
-                    echo "<td>" . $p->id . "</td>";
-                    echo "<td>" . $p->name . "</td>";
-                    echo "<td>" . implode(", ", $siape) . "</td>";
                     echo "<td>" . $p->document->name . "</td>";
                     echo "</tr>";
                 };

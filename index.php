@@ -15,5 +15,17 @@
         <li><a href="consulta5.php">Consulta por Múltiplos Campos</a></li>
         <li><a href="consulta6.php">Consulta por Múltiplos Valores</a></li>
     </ul>
+    <br>
+    <br>
+    <h1>Consultas Avançadas</h1>
+    <br>
+    <ul>
+        <li><a href="consulta-avancada-1.php">Lista de Nomes de Arquivos de Portarias de uma determinada matrícula do SIAPE</a></li>
+        <li><a href="consulta-avancada-2.php">Lista de Nomes de Arquivos de Portarias de um Nome de Servidor</a></li>
+        <li><a href="consulta-avancada-3.php">Lista de Matrículas SIAPE que aparecem em uma mesma portaria de uma Matrícula SIAPE informada</a></li>
+        <li><a href="consulta-avancada-4.php">Lista de Nomes de Servidor que aparecem em uma mesma portaria de um Nome de Servidor Informado</a></li>
+        <li><a href="consulta-avancada-5.php">Consulta por parte do Nome do Servidor</a></li>
+        <li><a href="consulta-avancada-6.php">Lista de Nomes de Arquivos de Portarias que possuem um Nome de Servidor relacionado com um Nome de Arquivo de Portaria informado</a></li>
+    </ul>
 </body>
 </hmtl>

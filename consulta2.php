@@ -29,7 +29,7 @@ error_reporting(E_ALL);
 
         $client = new MongoDB\Client("mongodb://localhost:27017");
 
-        $db = $client->selectDatabase("acerpi");
+        $db = $client->selectDatabase("registros-ufrgs");
 
         $collection = $db->selectCollection("ufrgs-records");
 
